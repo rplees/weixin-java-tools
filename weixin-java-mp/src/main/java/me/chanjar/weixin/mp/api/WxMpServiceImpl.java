@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -75,7 +73,6 @@ import me.chanjar.weixin.mp.util.http.MaterialVoiceAndImageDownloadRequestExecut
 import me.chanjar.weixin.mp.util.http.QrCodeRequestExecutor;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.Consts;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
@@ -172,6 +169,8 @@ public class WxMpServiceImpl implements WxMpService {
         }
       }
     }
+    
+    System.out.println("---accessToken:" + wxMpConfigStorage.getAccessToken());
     return wxMpConfigStorage.getAccessToken();
   }
 
@@ -903,5 +902,8 @@ public class WxMpServiceImpl implements WxMpService {
     return new WxMpPayCallback();
   }
   
-  
+  @Override
+  public WxMpConfigStorage getWxMpConfigStorage() {
+	  return this.wxMpConfigStorage;
+  }
 }

@@ -11,7 +11,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
+import java.util.Enumeration;
 
 /**
  * @author Daniel Qian
@@ -32,6 +34,14 @@ public class WxMpEndpointServlet extends HttpServlet {
   @Override protected void service(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
+	Enumeration<String> headerNames = request.getParameterNames();
+	System.out.println("=============println header start==============");
+	while(headerNames.hasMoreElements()) {
+		String nextElement = headerNames.nextElement();
+		System.out.println(nextElement + "--" + request.getParameter(nextElement));
+	}
+	System.out.println("=============println header end==============");
+		
     response.setContentType("text/html;charset=utf-8");
     response.setStatus(HttpServletResponse.SC_OK);
 

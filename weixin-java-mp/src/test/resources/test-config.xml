@@ -1,0 +1,10 @@
+<xml>
+    <appId>wx8567a394f4e0f730</appId>
+    <secret>1ac36897daf95b1c22c7d1ccb411ccad</secret>
+    <token>123456789012</token>
+    <aesKey>123456789012</aesKey>
+    <accessToken>可以不填写</accessToken>
+    <expiresTime>7200</expiresTime>
+    <openId>某个加你公众号的用户的openId</openId>
+    <oauth2redirectUri>网页授权获取用户信息回调地址</oauth2redirectUri>
+</xml>
