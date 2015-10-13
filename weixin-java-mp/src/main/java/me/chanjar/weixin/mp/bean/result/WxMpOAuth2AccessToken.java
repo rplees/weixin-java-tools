@@ -6,6 +6,9 @@ import java.io.Serializable;
 
 public class WxMpOAuth2AccessToken implements Serializable {
 
+  /**描述*/  
+  private static final long serialVersionUID = 1568758982673564570L;
+
   private String accessToken;
 
   private int expiresIn = -1;

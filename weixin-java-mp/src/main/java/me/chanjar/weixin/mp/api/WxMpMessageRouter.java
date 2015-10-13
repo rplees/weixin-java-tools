@@ -107,6 +107,10 @@ public class WxMpMessageRouter {
     this.sessionManager = sessionManager;
   }
 
+  public WxSessionManager getSessionManager() {
+    return sessionManager;
+  }
+  
   /**
    * <pre>
    * 设置自定义的{@link me.chanjar.weixin.common.api.WxErrorExceptionHandler}
