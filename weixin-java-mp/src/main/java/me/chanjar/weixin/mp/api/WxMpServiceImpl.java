@@ -202,6 +202,7 @@ public class WxMpServiceImpl implements WxMpService {
     long timestamp = System.currentTimeMillis() / 1000;
     String noncestr = RandomUtils.getRandomStr();
     String jsapiTicket = getJsapiTicket(false);
+   
     try {
       String signature = SHA1.genWithAmple(
           "jsapi_ticket=" + jsapiTicket,
@@ -209,12 +210,16 @@ public class WxMpServiceImpl implements WxMpService {
           "timestamp=" + timestamp,
           "url=" + url
       );
+      
+    
       WxJsapiSignature jsapiSignature = new WxJsapiSignature();
       jsapiSignature.setAppid(wxMpConfigStorage.getAppId());
       jsapiSignature.setTimestamp(timestamp);
       jsapiSignature.setNoncestr(noncestr);
       jsapiSignature.setUrl(url);
       jsapiSignature.setSignature(signature);
+      
+      System.out.println("createJsapiSignature使用的票据:" + jsapiTicket);
       return jsapiSignature;
     } catch (NoSuchAlgorithmException e) {
       throw new RuntimeException(e);
@@ -831,7 +836,7 @@ public class WxMpServiceImpl implements WxMpService {
     WxMpPrepayIdResult wxMpPrepayIdResult = getPrepayId(openId, outTradeNo, amt, body, tradeType, ip, callbackUrl);
     String prepayId = wxMpPrepayIdResult.getPrepay_id();
     if (prepayId == null || prepayId.equals("")) {
-      throw new RuntimeException("get prepayid error");
+      throw new RuntimeException("get prepayid error:" + wxMpPrepayIdResult.getReturn_code() + ":" + wxMpPrepayIdResult.getReturn_msg());
     }
 
     Map<String, String> payInfo = new HashMap<String, String>();
@@ -861,10 +866,15 @@ public class WxMpServiceImpl implements WxMpService {
       String sign = WxCryptUtil.createSign(packageParams, wxMpConfigStorage.getPartnerKey());
       String xml = "<xml>" +
               "<appid>" + wxMpConfigStorage.getAppId() + "</appid>" +
-              "<mch_id>" + wxMpConfigStorage.getPartnerId() + "</mch_id>" +
-              "<transaction_id>" + transactionId + "</transaction_id>" +
-              "<out_trade_no>" + outTradeNo + "</out_trade_no>" +
-              "<nonce_str>" + nonce_str + "</nonce_str>" +
+              "<mch_id>" + wxMpConfigStorage.getPartnerId() + "</mch_id>";
+              if(transactionId != null) {
+            	  xml += "<transaction_id>" + transactionId + "</transaction_id>";
+              }
+              
+              if(outTradeNo != null) {
+            	  xml += "<out_trade_no>" + outTradeNo + "</out_trade_no>";
+              }
+              xml += "<nonce_str>" + nonce_str + "</nonce_str>" +
               "<sign>" + sign + "</sign>" +
               "</xml>";
 
