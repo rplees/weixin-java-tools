@@ -44,4 +44,8 @@ public class URIUtil {
     }
     return o.toString();
   }
+  
+  public static void main(String[] args) {
+System.out.println(URIUtil.encodeURIComponent("姜汁黄鳝焗饭 电饭煲美食"));
+}
 }
